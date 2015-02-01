@@ -35,12 +35,14 @@
           });
         });
 
-        $(document).on('pjax:end', function() {
-          $rootScope.$apply(updateCurrentPath);
-
+        $(document).on('pjax:beforeReplace', function() {
           if (contentScope) {
             contentScope.$destroy();
           }
+        });
+
+        $(document).on('pjax:end', function() {
+          $rootScope.$apply(updateCurrentPath);
 
           contentScope = $scope.$new(false, $scope);
 
