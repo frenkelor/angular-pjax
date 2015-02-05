@@ -12,13 +12,20 @@
     };
 
     this.$get = function() {
-      return {};
+      return {
+        navigateTo: function(url) {
+          $.pjax({
+            url: url,
+            container: pjaxOptions.container
+          });
+        }
+      };
     };
   });
 
   angularPJAXModule.directive('pjaxContainer', function() {
     return {
-      controller: ['$rootScope', '$scope', '$window', '$compile', '$element', function($rootScope, $scope, $window, $compile, $element) {
+      controller: ['$rootScope', '$scope', '$window', '$timeout', '$compile', '$element', function($rootScope, $scope, $window, $timeout, $compile, $element) {
         var content, contentScope = null;
 
         var updateCurrentPath = function() {
@@ -30,25 +37,27 @@
         $(document).pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', pjaxOptions);
 
         $(document).on('pjax:start', function() {
-          $rootScope.$apply(function() {
+          $timeout(function() {
             $rootScope.contentLoading = true;
           });
         });
 
         $(document).on('pjax:beforeReplace', function() {
-          if (contentScope) {
-            contentScope.$destroy();
-          }
+          $timeout(function() {
+            if (contentScope) {
+              contentScope.$destroy();
+            }
+          });
         });
 
         $(document).on('pjax:end', function() {
-          $rootScope.$apply(updateCurrentPath);
+          $timeout(function() {
+            updateCurrentPath();
 
-          contentScope = $scope.$new(false, $scope);
+            contentScope = $scope.$new(false, $scope);
 
-          $element.html($compile($element.html())(contentScope));
+            $element.html($compile($element.html())(contentScope));
 
-          $rootScope.$apply(function() {
             $rootScope.contentLoading = false;
           });
         });
