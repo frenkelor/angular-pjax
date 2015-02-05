@@ -11,7 +11,7 @@ var myApp = angular.module('myApp', ['ngPJAX']);
 
 In your application layout:
 ```erb
-<body ng-app="myApp" ng-class="{ loading: loading }">
+<body ng-app="myApp" ng-class="{ contentLoading: loading }">
   <div role="main" pjax-container>
     <%= yield %>
   </div>

@@ -1,12 +1,11 @@
 {
   "name": "angular-pjax",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "authors": [
     "Dan Martens <dan@friendsoftheweb.com>"
   ],
   "main": "angular-pjax.js",
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",

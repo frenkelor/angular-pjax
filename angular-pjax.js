@@ -31,7 +31,7 @@
 
         $(document).on('pjax:start', function() {
           $rootScope.$apply(function() {
-            $rootScope.loading = true;
+            $rootScope.contentLoading = true;
           });
         });
 
@@ -49,7 +49,7 @@
           $element.html($compile($element.html())(contentScope));
 
           $rootScope.$apply(function() {
-            $rootScope.loading = false;
+            $rootScope.contentLoading = false;
           });
         });
 
