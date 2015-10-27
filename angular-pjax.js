@@ -25,8 +25,10 @@
 
   angularPJAXModule.directive('pjaxContainer', function() {
     return {
+      scope:true,
       controller: ['$rootScope', '$scope', '$window', '$timeout', '$compile', '$element', function($rootScope, $scope, $window, $timeout, $compile, $element) {
-        var content, contentScope = null;
+        var contentScope = $scope,
+            parentScope = $scope.$parent;;
 
         var updateCurrentPath = function() {
           $rootScope.currentPath = $window.location.pathname;
@@ -54,7 +56,7 @@
           $timeout(function() {
             updateCurrentPath();
 
-            contentScope = $scope.$new(false, $scope);
+            contentScope = parentScope.$new(false, parentScope);
 
             $element.html($compile($element.html())(contentScope));
 
